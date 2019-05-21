@@ -2,12 +2,29 @@
 
 wb = xlsx_package.workbook
 
-# add a worksheet
+wb.styles do |style|
+  project_heading = style.add_style(b: true, sz: 14)
+  heading = style.add_style(b: true)
 
-wb.add_worksheet(name: "Items") do |sheet|
-  # Create the header row
-  sheet.add_row ["Item Name", "Quantity"]
-  @items.each do |item|
-    sheet.add_row [item.name, item.quantity]
+
+  # add a worksheet
+
+  wb.add_worksheet(name: "Items") do |sheet|
+    # Add a title row
+    sheet.add_row ["Inventory Item"], style: project_heading
+
+    # Add the date this was downloaded
+    sheet.add_row ["Download At", Time.now.strftime("%b %-d, %Y")]
+
+    # Add a blank row
+    sheet.add_row []
+
+    # Create the header row
+    sheet.add_row ["Item Name", "Quantity"], style: heading
+
+    # Create entries for each item
+    @items.each do |item|
+      sheet.add_row [item.name, item.quantity]
+    end
   end
 end
