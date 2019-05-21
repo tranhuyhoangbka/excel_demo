@@ -1,0 +1,13 @@
+# create a workbook
+
+wb = xlsx_package.workbook
+
+# add a worksheet
+
+wb.add_worksheet(name: "Items") do |sheet|
+  # Create the header row
+  sheet.add_row ["Item Name", "Quantity"]
+  @items.each do |item|
+    sheet.add_row [item.name, item.quantity]
+  end
+end
